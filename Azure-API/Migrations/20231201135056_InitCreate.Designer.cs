@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AzureAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231120130322_InitCreate")]
+    [Migration("20231201135056_InitCreate")]
     partial class InitCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
