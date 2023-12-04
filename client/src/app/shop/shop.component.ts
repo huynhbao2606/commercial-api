@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ShopService } from './shop.service';
 import { faRefresh, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { IPagination } from '../models/IPagination';
+import { IBrand } from '../models/IBrand';
+import { IType } from '../models/IType';
 
 @Component({
   selector: 'app-shop',
@@ -14,6 +17,10 @@ export class ShopComponent {
 
   apiUrl = "http://localhost:5001/product";
   products: any[] = [];
+  brands : IBrand[] = [];
+  types : IType[] = [];
+
+  typeIdSelected : number = 0
 
   
   constructor(private shopService: ShopService){
@@ -21,16 +28,18 @@ export class ShopComponent {
   }
   
   ngOnInit() : void {
-    this.callApi();
+    this.getProducts();
+    this.getBrands();
+    this.getTypes();
   }
   
-  callApi(){
-    this.shopService.getProducts().subscribe(
+  getProducts() : void{
+    this.shopService.getProducts(this.typeIdSelected).subscribe(
     {
 
-      next : (response) => {
+      next : (response : IPagination |  null) => {
         console.log(response);
-        this.products = response.data;
+        this.products = response!.data;
       },
       error : (err) => console.log(err)
 
@@ -43,5 +52,24 @@ export class ShopComponent {
     //   console.log(err);
     // }
     );
+  }
+  getBrands() : void {
+    this.shopService.getBrands().subscribe({
+      next : (response) => this.brands = response,
+      error : (err) => console.log(err)
+    });
+  }
+
+  getTypes() : void {
+    this.shopService.getTypes().subscribe({
+      next : (response) => this.types = response,
+      error : (err) => console.log(err)
+
+    });
+  }
+
+  onSelectProductType(typeId : number){
+      this.typeIdSelected = typeId
+      this.getProducts();
   }
 }
