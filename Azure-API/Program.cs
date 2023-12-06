@@ -77,7 +77,7 @@ namespace AzureAPI
 
             app.UseAuthorization();
 
-            /*AppDbInitializer.Seed(app);*/
+            AppDbInitializer.Seed(app);
 
             app.MapControllers();
 

@@ -26,10 +26,8 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/bootswatch/dist/darkly/bootstrap.min.css",
-              "src/styles.css"
+	      "./node_modules/bootswatch/dist/darkly/bootstrap.min.css",
+	      "src/styles.css"
             ],
             "scripts": []
           },
@@ -100,6 +98,6 @@
     }
   },
   "cli": {
-    "analytics": "f66570cb-fac6-4b4a-9f49-4d12db733213"
+    "analytics": "292aa6f6-ef3d-4615-93ea-c538b9fa91be"
   }
 }

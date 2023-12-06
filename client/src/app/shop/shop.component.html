@@ -14,14 +14,7 @@
                 </li>
             </ul>
             <h5 class="text-warning ms-3">Types</h5>
-            <ul class="list-group">
-              <li class="list-group-items" *ngFor="let item of types"
-              (click) = "onSelectProductType(item.id)"
-              [class.active] = "item.id === typeIdSelected"
-              >
-                    {{item.name}} 
-              </li>
-            </ul>
+           
         </section>
         
         <section class="col-9">
@@ -48,9 +41,10 @@
           </div>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-              
+            	<div class="col" *ngFor="let item of products">
+              	<app-product-item [product]="item"></app-product-item>
             </div>
+          </div>
         </section>
     </div>
 </div>

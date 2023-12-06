@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,7 +8,7 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
-  
+
   faCartShopping = faCartShopping;
-  
+
 }

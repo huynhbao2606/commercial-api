@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { IPagination } from '../models/IPagination';
 import { ShopService } from './shop.service';
 import { faRefresh, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { IPagination } from '../models/IPagination';
 import { IBrand } from '../models/IBrand';
+import { IProduct } from '../models/IProduct';
 import { IType } from '../models/IType';
 
 @Component({
@@ -11,65 +11,50 @@ import { IType } from '../models/IType';
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.css']
 })
-export class ShopComponent {
-  //Icon 
+export class ShopComponent implements OnInit {
   faRefresh = faRefresh; faSearch = faSearch;
+  products: IProduct[] = [];
+  brands: IBrand[] = [];
+  productTypes: IType[] = [];
 
-  apiUrl = "http://localhost:5001/product";
-  products: any[] = [];
-  brands : IBrand[] = [];
-  types : IType[] = [];
+  typeIdSelected: number = 0;
 
-  typeIdSelected : number = 0
-
-  
-  constructor(private shopService: ShopService){
-    
+  constructor(private shopService: ShopService) {
   }
-  
-  ngOnInit() : void {
+
+  ngOnInit(): void {
     this.getProducts();
     this.getBrands();
     this.getTypes();
   }
-  
-  getProducts() : void{
-    this.shopService.getProducts(this.typeIdSelected).subscribe(
-    {
 
-      next : (response : IPagination |  null) => {
+  getProducts(): void {
+    this.shopService.getProducts(this.typeIdSelected).subscribe({
+      next: (response: IPagination | null) => {
         console.log(response);
         this.products = response!.data;
-      },
-      error : (err) => console.log(err)
-
-    } 
-    // (response : IPagination) => 
-    // {
-    //   console.log(response);
-    //   this.products = response.data;
-    // }, err => {
-    //   console.log(err);
-    // }
-    );
+      }, 
+      error: (err) => console.log(err)
+    });
   }
-  getBrands() : void {
+
+  getBrands(): void {
     this.shopService.getBrands().subscribe({
-      next : (response) => this.brands = response,
-      error : (err) => console.log(err)
+      next: (response) => this.brands = response,
+      error: (err) => console.log(err)
     });
   }
 
-  getTypes() : void {
+  getTypes(): void {
     this.shopService.getTypes().subscribe({
-      next : (response) => this.types = response,
-      error : (err) => console.log(err)
-
+      next: (response) => this.productTypes = response,
+      error: (err) => console.log(err)
     });
   }
 
-  onSelectProductType(typeId : number){
-      this.typeIdSelected = typeId
-      this.getProducts();
+  onSelectProductType(typeId: number) {
+    this.typeIdSelected = typeId;
+    this.getProducts();
   }
+
 }

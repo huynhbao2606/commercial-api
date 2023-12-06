@@ -9,28 +9,24 @@ import { IType } from '../models/IType';
   providedIn: 'root'
 })
 export class ShopService {
-
-  Url = "http://localhost:5001/";
-
+  baseUrl = 'https://localhost:5001/';
 
   constructor(private http: HttpClient) { }
 
-  getProducts(typeId : number): Observable<IPagination>{
-
+  getProducts(typeId?: number): Observable<IPagination | null> {
     let params = new HttpParams();
 
-    if(typeId){
+    if (typeId) {
       params = params.append('typeId', typeId.toString());
     }
-
-    return this.http.get<IPagination>(this.Url + 'product?pageSize=20', {observe: 'response', params});
+    return this.http.get<IPagination>(this.baseUrl + 'product?pageSize=20', {params});
   }
 
-  getBrands(): Observable<IBrand[]>{
-    return this.http.get<IBrand[]>( this.Url + 'product/brands');
+  getBrands(): Observable<IBrand[]> {
+    return this.http.get<IBrand[]>(this.baseUrl + 'products/brand');
   }
 
-  getTypes(): Observable<IType[]>{
-    return this.http.get<IType[]>( this.Url + 'product/types');
+  getTypes(): Observable<IType[]> {
+    return this.http.get<IBrand[]>(this.baseUrl + 'products/type');
   }
 }
