@@ -11,4 +11,5 @@ export class ProductItemComponent {
   faCartShopping = faCartShopping;
 
   @Input() product: IProduct | undefined;
+  
 }

@@ -1,21 +1,20 @@
-﻿using AzureAPI.Data;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using AzureAPI.Entities;
-using Microsoft.EntityFrameworkCore;
-using AzureAPI.Dao;
 using AzureAPI.Dao.IRepository;
 using AzureAPI.DTO;
 using AzureAPI.Helper;
 using AutoMapper;
-using System.Linq;
 using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+
+using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AzureAPI
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -41,6 +40,8 @@ namespace AzureAPI
                 pagination: pagination);
 
             var productDto = _mapper.Map<IEnumerable<ProductDTO>>(query);
+
+         
 
             return Ok(productDto);
         }

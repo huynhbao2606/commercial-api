@@ -4,6 +4,9 @@ import { ShopComponent } from './shop.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '../shared/shared.module';
 import { ProductItemComponent } from './product-item/product-item.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { RouterModule } from '@angular/router';
+import { ShopRoute } from './shop.routing';
 
 
 
@@ -11,10 +14,12 @@ import { ProductItemComponent } from './product-item/product-item.component';
   declarations: [
     ShopComponent,
     ProductItemComponent,
+    ProductDetailComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule.forChild(ShopRoute)
   ],
   exports: [
     ShopComponent,
