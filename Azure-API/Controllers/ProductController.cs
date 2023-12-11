@@ -10,6 +10,8 @@ using System.Linq.Expressions;
 
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc;
+using AzureAPI.Extensions;
+using AzureAPI.Helpers;
 
 namespace AzureAPI
 {
@@ -32,16 +34,22 @@ namespace AzureAPI
             [FromQuery] ProductRequestParams productRequestParams,
             [FromQuery] PaginationParams pagination)
         {
-
             var query = await _unitOfWork.ProductRepository.GetEntities(
-                filter: buildFilter(productRequestParams),
-                orderBy: buildSortQuery(productRequestParams),
-                includeProperties: "ProductType,ProductBrand",
-                pagination: pagination);
+                            filter: buildFilter(productRequestParams),
+                            orderBy: buildSortQuery(productRequestParams),
+                            includeProperties: "ProductType,ProductBrand",
+                            pagination: pagination);
 
             var productDto = _mapper.Map<IEnumerable<ProductDTO>>(query);
 
-         
+            int totalRecord = query.Count();
+
+
+            Response.AddPaginationHeader(new PagedList<ProductDTO>(
+                pagination.PageNumber,
+                pagination.PageSize,
+                query.TotalCount
+                query.TotalPages);
 
             return Ok(productDto);
         }
