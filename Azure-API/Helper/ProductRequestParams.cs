@@ -1,6 +1,6 @@
 ﻿namespace AzureAPI.Helper
 {
-    public class ProductRequestParams
+    public class ProductRequestParams : PaginationParams
     {
         public int? BrandId { get; set; }
 

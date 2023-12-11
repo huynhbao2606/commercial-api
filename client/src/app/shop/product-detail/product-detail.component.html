@@ -1,1 +1,22 @@
-<p>product-detail works!</p>
+<div class="row">
+  <div class="col-4">
+    <img src="{{product?.pictureUrl}}" alt="{{product?.name}}" class="w-100 img-fluid ">
+  </div>
+
+  <div class="col-8">
+    <h3>{{product?.name}}</h3>
+    <p style="font-size: 1.5em;">{{product?.price | currency}}</p>
+    <div class="d-flex justify-content-center align-items-center">
+      <fa-icon [icon]="faPlusCircle" style="cursor: pointer;font-size: 1.5em;" class="text-warning"></fa-icon>
+      <span class="fw-bold mx-2">2</span>
+      <fa-icon [icon]="faMinusCircle" style="cursor: pointer;font-size: 1.5em;" class="text-warning"></fa-icon>
+      <button class="btn btn-check"></button>
+      <div class="row mt-5">
+        <div class="col-12 ml-3">
+          <h4>Description</h4>
+          <p>{{product?.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

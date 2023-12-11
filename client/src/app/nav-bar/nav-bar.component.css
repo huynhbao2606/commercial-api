@@ -9,3 +9,13 @@
     min-width: 25px;
     text-align: center;
 }
+
+
+a{
+  color: black;
+}
+
+a.active{
+  color: green;
+}
+

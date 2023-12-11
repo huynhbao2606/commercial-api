@@ -10,11 +10,11 @@
 
           <h5 class="text-warning ml-3">Types</h5>
           <ul class="list-group">
-            <li class="list-group-item" 
+            <li class="list-group-item"
               *ngFor="let item of productTypes"
               [value] = "item.id"
               (click) = "onSelectProductType(item.id)"
-              [class.active] = "item.id === typeIdSelected"
+              [class.active] = "item.id === userParams.typeId"
             >
               {{item.name}}
             </li>
@@ -22,25 +22,21 @@
 
           <h5 class="text-warning ml-3">Brands</h5>
           <ul class="list-group">
-            <li class="list-group-item" 
+            <li class="list-group-item"
               *ngFor="let item of brands"
-              [class.active] = "item.id === brandIdSelected"
+              [class.active] = "item.id === userParams.brandId"
               [value] = "item.id"
               (click) = "onBrandSelect(item.id)"
             >
               {{item.name}}
             </li>
           </ul>
-          
+
       </section>
 
       <section class="col-9">
         <div class="d-flex justify-content-between align-items-center pb-2">
-          <app-paging-header 
-            [pageNumber]="this.pageNumber"  
-            [pageSize]="this.pageSize"
-            [totalCount]="this.totalCount"
-          ></app-paging-header>
+
 
           <div class="row align-items-center">
             <div class="col">
@@ -66,12 +62,17 @@
           </div>
         </div>
 
-        <div class="d-flex justify-content-center py-4" *ngIf="this.totalCount && this.totalCount > 0">
-          <app-pager
-            [pageSize]="this.pageSize"
-            [totalCount]="this.totalCount"
-            (newPageNumber)="onPageChanged($event)"
-          ></app-pager>
+        <div class="d-flex justify-content-center py-4" *ngIf="this.pagination && this.pagination.totalItems && this.pagination.totalItems > 0">
+
+          <pagination *ngIf="this.pagination"
+          [boundaryLinks]="true"
+          [totalItems]="this.pagination.totalItems"
+          [itemsPerPage]="pagination.itemsPerPage"
+          [maxSize]="10"
+          [(ngModel)]="pagination.currentPage"
+          (pageChanged)="onPageChanged($event)"
+          >
+</pagination>
         </div>
 
       </section>

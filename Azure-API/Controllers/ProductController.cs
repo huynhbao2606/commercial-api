@@ -30,26 +30,18 @@ namespace AzureAPI
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts(
-            [FromQuery] ProductRequestParams productRequestParams,
-            [FromQuery] PaginationParams pagination)
+        public async Task<ActionResult<PagedList<ProductDTO>>> GetProducts(
+            [FromQuery] ProductRequestParams productRequestParams)
         {
-            var query = await _unitOfWork.ProductRepository.GetEntities(
-                            filter: buildFilter(productRequestParams),
-                            orderBy: buildSortQuery(productRequestParams),
-                            includeProperties: "ProductType,ProductBrand",
-                            pagination: pagination);
+            var query = await _unitOfWork.ProductRepository.GetAsync(
+                filter: buildFilter(productRequestParams),
+                orderBy: buildSortQuery(productRequestParams),
+                includeProperties: "ProductType,ProductBrand");
 
             var productDto = _mapper.Map<IEnumerable<ProductDTO>>(query);
 
-            int totalRecord = query.Count();
-
-
-            Response.AddPaginationHeader(new PagedList<ProductDTO>(
-                pagination.PageNumber,
-                pagination.PageSize,
-                query.TotalCount
-                query.TotalPages);
+            Response.AddPaginationHeader(new PaginationHeader(
+                productRequestParams.PageNumber, productRequestParams.PageSize, query.TotalCount, query.TotalPages));
 
             return Ok(productDto);
         }
@@ -83,18 +75,20 @@ namespace AzureAPI
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<ProductDTO>>> GetSingleProduct(int id)
+        public async Task<ActionResult<ProductDTO>> GetSingleProduct(int id)
         {
-            var query = await _unitOfWork.ProductRepository.GetEntities(
-                filter: i => i.Id == id,
-                includeProperties: "ProductType,ProductBrand");
+            var query = await _unitOfWork.ProductRepository.GetAsync(
+                filter: x => x.Id == id,
+                includeProperties: "ProductType,ProductBrand",
+                pagingParams: null,
+                orderBy: null
 
-            Product product = query.FirstOrDefault();
+            );
 
-            ProductDTO productdto = _mapper.Map<ProductDTO>(product);
+            var productDto = _mapper.Map<ProductDTO>(query.FirstOrDefault());
 
 
-            return Ok(productdto);
+            return Ok(productDto);
         }
 
 

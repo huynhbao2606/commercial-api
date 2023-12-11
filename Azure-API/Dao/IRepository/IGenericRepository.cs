@@ -10,10 +10,13 @@ namespace AzureAPI.Dao.IRepository
 
         Task<IEnumerable<T>> GetAll();
 
-        Task<PagedList<T>> GetEntities(Expression<Func<T, bool>> filter = null,
-                Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                string includeProperties = "",
-                PaginationParams pagination = null);
+        Task<PagedList<T>> GetAsync(
+    Expression<Func<T, bool>> filter = null,
+    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+    string includeProperties = "",
+    PaginationParams pagingParams = null);
+
+    
 
         void Add(T entity);
 

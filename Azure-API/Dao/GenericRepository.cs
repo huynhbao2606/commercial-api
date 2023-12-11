@@ -26,30 +26,42 @@ namespace AzureAPI.Dao
         public async Task<IEnumerable<T>> GetAll()
         {
             var query = dbSet.AsQueryable();
-            return await query.ToListAsync(); 
+            return await query.ToListAsync();
         }
 
-        public async Task<PagedList<T>> GetEntities(Expression<Func<T, bool>> filter = null,
-                Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                string includeProperties = "",
-                PaginationParams pagination = null)
+        public async Task<PagedList<T>> GetAsync(
+    Expression<Func<T, bool>> filter = null,
+    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+    string includeProperties = "",
+    PaginationParams pagingParams = null)
+        {
+            var query = PrepareQuery(filter, orderBy, includeProperties);
+
+            if (pagingParams != null)
+            {
+                return await PagedList<T>.CreateAsync(query, pagingParams.PageNumber, pagingParams.PageSize);
+            }
+
+            return await PagedList<T>.CreateAsync(query, 1, await query.CountAsync());
+        }
+
+        private IQueryable<T> PrepareQuery(
+        Expression<Func<T, bool>> filter = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        string includeProperties = "")
         {
             IQueryable<T> query = dbSet;
 
-            if(filter != null)
+            if (filter != null)
             {
                 query = query.Where(filter);
             }
-            
 
-            if(includeProperties != null && includeProperties != "")
+            if (!string.IsNullOrEmpty(includeProperties))
             {
-                string[] splitedIncludeProperties =
-                   includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (var property in splitedIncludeProperties)
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    query = query.Include(property);
+                    query = query.Include(includeProperty);
                 }
             }
 
@@ -58,7 +70,7 @@ namespace AzureAPI.Dao
                 query = orderBy(query);
             }
 
-            return await PagedList<T>.ToPagedList(query,pagination.PageNumber,pagination.PageSize);
+            return query;
         }
 
         public void Add(T entity)

@@ -7,6 +7,7 @@ import { ProductItemComponent } from './product-item/product-item.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { RouterModule } from '@angular/router';
 import { ShopRoute } from './shop.routing';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -19,6 +20,7 @@ import { ShopRoute } from './shop.routing';
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
     RouterModule.forChild(ShopRoute)
   ],
   exports: [
