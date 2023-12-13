@@ -6,7 +6,7 @@ using AzureAPI.Exceptions;
 namespace AzureAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BuggyController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -17,10 +17,10 @@ namespace AzureAPI.Controllers
         }
 
         /// 404 page not foud
-   
+
         /// 404 bad reques
         /// 
-        [HttpGet("Bad-Request")]
+        [HttpGet("bad-request")]
         public ActionResult GetBadRequest()
         {
             return BadRequest(new ErrorResponse(400));
@@ -29,19 +29,19 @@ namespace AzureAPI.Controllers
 
         /// 400 validation error -- input string in the id field    
         /// 
-        [HttpGet("Bad-Request/{id}")]
+        [HttpGet("bad-request/{id}")]
         public ActionResult GetValidationError(int id)
         {
 
             return Ok();
-     
+
 
         }
-        
+
 
         /// 500 server error
         ///     
-        [HttpGet("Server-Error")]
+        [HttpGet("server-error")]
         public async Task<ActionResult> GetSeverError()
         {
             Product notfountProduct = await _unitOfWork.ProductRepository.GetById("1000");

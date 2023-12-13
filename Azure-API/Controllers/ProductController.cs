@@ -7,9 +7,6 @@ using AzureAPI.Helper;
 using AutoMapper;
 using System.Linq.Expressions;
 
-
-using System.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc;
 using AzureAPI.Extensions;
 using AzureAPI.Helpers;
 
