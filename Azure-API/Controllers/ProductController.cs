@@ -30,7 +30,7 @@ namespace AzureAPI
         public async Task<ActionResult<PagedList<ProductDTO>>> GetProducts(
             [FromQuery] ProductRequestParams productRequestParams)
         {
-            var query = await _unitOfWork.ProductRepository.GetAsync(
+            var query = await _unitOfWork.ProductRepository.GetEntities(
                 filter: buildFilter(productRequestParams),
                 orderBy: buildSortQuery(productRequestParams),
                 includeProperties: "ProductType,ProductBrand");
@@ -74,7 +74,7 @@ namespace AzureAPI
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDTO>> GetSingleProduct(int id)
         {
-            var query = await _unitOfWork.ProductRepository.GetAsync(
+            var query = await _unitOfWork.ProductRepository.GetEntities(
                 filter: x => x.Id == id,
                 includeProperties: "ProductType,ProductBrand",
                 pagingParams: null,

@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using AzureAPI.Middlewares;
 using Microsoft.AspNetCore.Mvc;
 using AzureAPI.Exceptions;
+using StackExchange.Redis;
+using Azure_API.Dao.IRepository;
+using Azure_API.Dao;
 
 namespace AzureAPI
 {
@@ -18,6 +21,11 @@ namespace AzureAPI
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                builder.Configuration.GetConnectionString("Entity")
             ));
+            builder.Services.AddSingleton<IConnectionMultiplexer>(_ =>
+            {
+                var rediturl = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"), true);
+                return ConnectionMultiplexer.Connect(rediturl);
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -54,6 +62,7 @@ namespace AzureAPI
 
             //declare service for dependency injection
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 
             var app = builder.Build();

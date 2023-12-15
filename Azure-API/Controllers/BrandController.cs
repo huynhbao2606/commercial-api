@@ -46,6 +46,6 @@ namespace AzureAPI.Controllers
             return brand;
         }
 
-        
+
     }
 }

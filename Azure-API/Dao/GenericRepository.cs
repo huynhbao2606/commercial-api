@@ -29,7 +29,7 @@ namespace AzureAPI.Dao
             return await query.ToListAsync();
         }
 
-        public async Task<PagedList<T>> GetAsync(
+        public async Task<PagedList<T>> GetEntities(
     Expression<Func<T, bool>> filter = null,
     Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
     string includeProperties = "",
