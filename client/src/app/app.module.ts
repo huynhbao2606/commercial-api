@@ -12,9 +12,10 @@ import { SharedModule } from './shared/shared.module';
 import { ErrorInterceptor } from './middleware/error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './middleware/loading.interceptor';
+import { BasketComponent } from './basket/basket/basket.component';
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent],
+  declarations: [AppComponent, NavBarComponent, BasketComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
